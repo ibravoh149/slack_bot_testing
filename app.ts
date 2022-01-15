@@ -19,7 +19,7 @@ const app = new App({
   console.log("⚡️ Bolt app is running!");
 })();
 
-app.command("/bot", async ({ command, ack, say }) => {
+app.command("/messages", async ({ command, ack, say }) => {
   try {
     await ack();
     say("it is working");
