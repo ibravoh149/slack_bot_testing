@@ -5,7 +5,7 @@ declare global {
       PORT?: string;
       SLACK_SIGNING_SECRET: string;
       SLACK_BOT_TOKEN: string;
-      APP_TOKEN: string;
+      // APP_TOKEN: string;
     }
   }
 }
