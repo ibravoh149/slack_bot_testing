@@ -12,14 +12,6 @@ const app = new App({
 
 /* Add functionality here */
 
-(async () => {
-  // Start the app
-  const port: any = process.env.PORT;
-  await app.start(port || 3000);
-
-  console.log("⚡️ Bolt app is running!");
-})();
-
 app.command("/messages", async ({ command, ack, say }) => {
   try {
     await ack();
@@ -28,3 +20,11 @@ app.command("/messages", async ({ command, ack, say }) => {
     console.log("errr=====", error);
   }
 });
+
+(async () => {
+  // Start the app
+  const port: any = process.env.PORT;
+  await app.start(port || 3000);
+
+  console.log("⚡️ Bolt app is running!");
+})();
