@@ -12,7 +12,7 @@ const app = new App({
 
 /* Add functionality here */
 
-app.command("/messages", async ({ command, ack, say }) => {
+app.command("/slack/events", async ({ command, ack, say }) => {
   try {
     await ack();
     say("it is working");
