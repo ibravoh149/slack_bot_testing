@@ -19,7 +19,7 @@ class Services {
             {
               name: "response_selection_name",
               text: "Select a response",
-              type: "select",
+              type: "multi_static_select",
               options: level_info?.dropDownValues,
             },
           ],

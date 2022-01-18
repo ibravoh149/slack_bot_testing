@@ -11,7 +11,7 @@ export interface ISlackCommandBodyObject {
   command?: string;
   text?: string;
   response_url?: string;
-  trigger_id?: number;
+  trigger_id?: string;
   api_app_id?: string;
 }
 
