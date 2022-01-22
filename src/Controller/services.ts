@@ -31,47 +31,49 @@ class Services {
     //     },
     //   ],
     // };
-    const resObject = [
-      {
-        type: "section",
-        block_id: "section678",
-        text: {
-          type: "mrkdwn",
-          text: "Pick an item from the dropdown list",
-        },
-        accessory: {
-          action_id: "text1234",
-          type: "static_select",
-          placeholder: {
-            type: "plain_text",
-            text: "Select an item",
+    const resObject = {
+      blocks: [
+        {
+          type: "section",
+          block_id: "section678",
+          text: {
+            type: "mrkdwn",
+            text: "Pick an item from the dropdown list",
           },
-          options: [
-            {
-              text: {
-                type: "plain_text",
-                text: "*this is plain_text text*",
-              },
-              value: "value-0",
+          accessory: {
+            action_id: "text1234",
+            type: "static_select",
+            placeholder: {
+              type: "plain_text",
+              text: "Select an item",
             },
-            {
-              text: {
-                type: "plain_text",
-                text: "*this is plain_text text*",
+            options: [
+              {
+                text: {
+                  type: "plain_text",
+                  text: "*this is plain_text text*",
+                },
+                value: "value-0",
               },
-              value: "value-1",
-            },
-            {
-              text: {
-                type: "plain_text",
-                text: "*this is plain_text text*",
+              {
+                text: {
+                  type: "plain_text",
+                  text: "*this is plain_text text*",
+                },
+                value: "value-1",
               },
-              value: "value-2",
-            },
-          ],
+              {
+                text: {
+                  type: "plain_text",
+                  text: "*this is plain_text text*",
+                },
+                value: "value-2",
+              },
+            ],
+          },
         },
-      },
-    ];
+      ],
+    };
 
     return resObject;
   }
