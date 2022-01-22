@@ -36,9 +36,8 @@ class App {
       express.json({
         verify: (req, res, buff) => {
           const request: any = req;
-          request.rawBodyyyysss = buff;
+          request.rawBody = buff;
           req = request;
-          console.log("parser", req);
         },
       })
     );
