@@ -32,45 +32,92 @@ class Services {
     //   ],
     // };
     const resObject = {
-      blocks: [
+      // blocks: [
+      //   {
+      //     type: "section",
+      //     block_id: "section678",
+      //     text: {
+      //       type: "mrkdwn",
+      //       text: "Pick an item from the dropdown list",
+      //     },
+      //     accessory: {
+      //       action_id: "text1234",
+      //       type: "static_select",
+      //       placeholder: {
+      //         type: "plain_text",
+      //         text: "Select an item",
+      //       },
+      //       options: [
+      //         {
+      //           text: {
+      //             type: "plain_text",
+      //             text: "*this is plain_text text*",
+      //           },
+      //           value: "value-0",
+      //         },
+      //         {
+      //           text: {
+      //             type: "plain_text",
+      //             text: "*this is plain_text text*",
+      //           },
+      //           value: "value-1",
+      //         },
+      //         {
+      //           text: {
+      //             type: "plain_text",
+      //             text: "*this is plain_text text*",
+      //           },
+      //           value: "value-2",
+      //         },
+      //       ],
+      //     },
+      //   },
+      // ],
+
+      attachments: [
         {
-          type: "section",
-          block_id: "section678",
-          text: {
-            type: "mrkdwn",
-            text: "Pick an item from the dropdown list",
-          },
-          accessory: {
-            action_id: "text1234",
-            type: "static_select",
-            placeholder: {
-              type: "plain_text",
-              text: "Select an item",
+          color: "#f2c744",
+          blocks: [
+            {
+              type: "section",
+              block_id: "section678",
+              text: {
+                type: "mrkdwn",
+                text: "Pick items from the list",
+              },
+              accessory: {
+                action_id: "text1234",
+                type: "multi_static_select",
+                placeholder: {
+                  type: "plain_text",
+                  text: "Select items",
+                },
+                options: [
+                  {
+                    text: {
+                      type: "plain_text",
+                      text: "*this is plain_text text*",
+                    },
+                    value: "value-0",
+                  },
+                  {
+                    text: {
+                      type: "plain_text",
+                      text: "*this is plain_text text*",
+                    },
+                    value: "value-1",
+                  },
+                  {
+                    text: {
+                      type: "plain_text",
+                      text: "*this is plain_text text*",
+                    },
+                    value: "value-2",
+                  },
+                ],
+              },
             },
-            options: [
-              {
-                text: {
-                  type: "plain_text",
-                  text: "*this is plain_text text*",
-                },
-                value: "value-0",
-              },
-              {
-                text: {
-                  type: "plain_text",
-                  text: "*this is plain_text text*",
-                },
-                value: "value-1",
-              },
-              {
-                text: {
-                  type: "plain_text",
-                  text: "*this is plain_text text*",
-                },
-                value: "value-2",
-              },
-            ],
-          },
+          ],
         },
       ],
     };
