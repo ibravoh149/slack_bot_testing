@@ -19,6 +19,7 @@ class AppController {
     const data = req.body;
 
     console.log(JSON.parse(data.payload));
+    console.log(data.payload);
 
     return res.status(200);
   }
