@@ -34,9 +34,9 @@ class App {
   private middlewareConfig(): void {
     this.express.use(
       express.json({
-        verify: (req, res, buff) => {
+        verify: (req, res, buff, encoding) => {
           const request: any = req;
-          request.rawBody = buff;
+          request.rawBody = buff.toString("utf-8");
           req = request;
         },
       })
