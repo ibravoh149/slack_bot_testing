@@ -20,7 +20,7 @@ class Services {
           // text: action_info?.message,
           // fallback: action_info?.message,
           color: "#2c963f",
-          attachment_type: "default",
+          // attachment_type: "default",
           // callback_id: action_info?.next,
 
           blocks: [
