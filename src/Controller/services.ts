@@ -12,13 +12,13 @@ class Services {
     const action = "action_1";
     const action_info = getActionInformation(action);
     const resObject: ISlackCommandResponse = {
-      response_type: "in_channel",
+      // response_type: "in_channel",
       channel: data.channel_id,
       text: "Hello :slightly_smiling_face:",
       attachments: [
         {
-          // text: action_info?.message,
-          // fallback: action_info?.message,
+          text: action_info?.message,
+          fallback: action_info?.message,
           color: "#2c963f",
           // attachment_type: "default",
           // callback_id: action_info?.next,
@@ -110,6 +110,7 @@ class Services {
     const resObject: ISlackCommandResponse = {
       response_type: "in_channel",
       channel: data.channel.id,
+      text: action_info?.message,
       attachments: [
         {
           text: action_info?.message,
