@@ -1,14 +1,16 @@
 import { NextFunction, Request, Response } from "express";
 import crypto from "crypto";
+import qs from "qs";
 
 export const verify_key = (req: Request, res: Response, next: NextFunction) => {
   const timeStamp = req.headers["x-slack-request-timestamp"];
   const slack_sig = req.headers["x-slack-signature"];
-  const request: any = req;
+  // const request: any = req;
+  const body = qs.stringify(req.body, { format: "RFC1738" });
 
   console.log(timeStamp);
   console.log(slack_sig);
-  console.log(request.rawBody);
+  console.log(body);
   const secret = process.env.SLACK_SIGNING_SECRET;
   let time = Math.floor(new Date().getTime() / 1000);
 
@@ -16,7 +18,7 @@ export const verify_key = (req: Request, res: Response, next: NextFunction) => {
     console.log("failed tme");
     return res.status(401).send("ignored");
   }
-  const sig_basestring = "v0:" + timeStamp + ":" + request.rawBody;
+  const sig_basestring = "v0:" + timeStamp + ":" + body;
 
   const hmac =
     "v0=" +
