@@ -17,8 +17,8 @@ class Services {
       text: "Hello :slightly_smiling_face:",
       attachments: [
         {
-          text: action_info?.message,
-          fallback: action_info?.message,
+          // text: action_info?.message,
+          // fallback: action_info?.message,
           color: "#2c963f",
           attachment_type: "default",
           // callback_id: action_info?.next,
