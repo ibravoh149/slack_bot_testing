@@ -4,6 +4,7 @@ import crypto from "crypto";
 export const verify_key = (req: Request, res: Response, next: NextFunction) => {
   const timeStamp = req.headers["X-Slack-Request-Timestamp"];
   const slack_sig = req.headers["X-Slack-Signature"];
+  console.log(slack_sig);
   const secret = process.env.SLACK_SIGNING_SECRET;
 
   if (Math.abs(new Date().getTime() - Number(timeStamp)) > 60 * 5) {
@@ -19,13 +20,13 @@ export const verify_key = (req: Request, res: Response, next: NextFunction) => {
       .update(sig_basestring as string)
       .digest("hex");
 
-  console.log(
-    "is Valid",
-    crypto.timingSafeEqual(
-      Buffer.from(hmac as string, "utf-8"),
-      Buffer.from(slack_sig as string, "utf-8")
-    )
-  );
+  // console.log(
+  //   "is Valid",
+  //   crypto.timingSafeEqual(
+  //     Buffer.from(hmac as string, "utf-8"),
+  //     Buffer.from(slack_sig as string, "utf-8")
+  //   )
+  // );
   //   if (crypto.timingSafeEqual(
   //     Buffer.from(hmac, 'utf8'),
   //     Buffer.from(slack_sig as string, 'utf8'))) {
