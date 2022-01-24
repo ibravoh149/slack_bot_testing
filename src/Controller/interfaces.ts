@@ -1,3 +1,8 @@
+export enum ACTION_TYPES {
+  action_1 = "action_1",
+  action_2 = "action_2",
+  action_end = "action_end",
+}
 export interface ISlackCommandBodyObject {
   token?: string;
   team_id?: string;
@@ -17,14 +22,21 @@ export interface ISlackCommandBodyObject {
 
 export interface ISlackMessageObject {
   type: string;
-  actions: {
-    name: string;
-    type: string;
-    selected_options: {
-      value: string;
-    }[];
-  }[];
+  // actions: {
+  //   name: string;
+  //   type: string;
+  //   selected_options: {
+  //     value: string;
+  //   }[];
+  // }[];
   callback_id: string;
+  api_app_id?: string;
+  container?: {
+    type: string;
+    message_ts: string;
+    channel_id: string;
+    is_ephemeral: boolean;
+  };
   team: {
     id: string;
     domain: string;
@@ -44,55 +56,79 @@ export interface ISlackMessageObject {
   is_app_unfurl: boolean;
   enterprise?: null | string;
   is_enterprise_install: boolean;
-  original_message: {
-    type: string;
-    subtype: string;
+
+  actions?: {
+    id: string;
+    name: string;
     text: string;
-    ts: string;
-    bot_id: string;
-    attachments: {
-      id: number;
-      color: string;
-      fallback: string;
+    type: string;
+    action_id: string;
+    block_id?: string;
+    selected_option?: SelectedOption;
+    selected_options?: SelectedOption[];
+    placeholder?: {
+      type: string;
       text: string;
-      callback_id: string;
-      actions: {
-        id: string;
-        name: string;
-        text: string;
-        type: string;
-        data_source: string;
-        options: {
-          text: string;
-          value: string;
-        }[];
-      }[];
+      emoji: boolean;
+    };
+    action_ts?: string;
+    data_source: string;
+    options: {
+      text: string;
+      value: string;
     }[];
+  }[];
+  response_url?: string;
+  trigger_id?: string;
+}
+
+interface SelectedOption {
+  text?: {
+    type?: string;
+    text?: string;
+    "emoji?": boolean;
   };
-  response_url: string;
-  trigger_id: string;
+  value?: string;
 }
 
 export interface ISlackCommandResponse {
   response_type?: string;
   channel?: string;
   text?: string;
-  attachments?: [
-    {
-      text?: string;
-      fallback?: string;
-      color: string;
-      attachment_type?: string;
-      callback_id?: string;
-      actions: {
-        name?: string;
-        text?: string;
-        type?: string;
-        options?: { text: string; value: string }[];
-      }[];
-    }
-  ];
+  attachments?: {
+    text?: string;
+    fallback?: string;
+    color?: string;
+    attachment_type?: string;
+    callback_id?: string;
+    block?: ISlackResponse[];
+  }[];
 }
+
+export interface ISlackResponse {
+  type?: string;
+  block_id?: string;
+  text: {
+    type?: string;
+    text?: string;
+  };
+  accessory?: {
+    action_id?: string;
+    type?: string;
+    placeholder: {
+      type: string;
+      text: string;
+    };
+    options?: {
+      text?: {
+        type?: string;
+        text?: string;
+      };
+      value?: string;
+    }[];
+  };
+}
+
 export interface ISlackMessageReponse {
   response_type?: string;
   channel?: string;
@@ -124,7 +160,8 @@ export interface ISlackMessageReponse {
 }
 export interface IUserResponses {
   key: string;
-  dropDownValues?: { text: string; value: string }[];
+  dropDownValues?: { text: { type?: string; text?: string }; value?: string }[];
   message: string;
   next?: string;
+  interactive_type?: string;
 }

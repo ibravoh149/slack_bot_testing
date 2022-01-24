@@ -1,120 +1,44 @@
-import { getLevelInformation } from "../utils/getResponseDown";
+import { getActionInformation } from "../utils/getResponseDown";
 import {
   ISlackCommandBodyObject,
   ISlackCommandResponse,
   ISlackMessageObject,
-  ISlackMessageReponse,
+  ISlackResponse,
+  ACTION_TYPES,
 } from "./interfaces";
 
 class Services {
   async command(data: ISlackCommandBodyObject) {
-    const level_info = getLevelInformation("level_1");
-    // const resObject: ISlackCommandResponse = {
-    //   response_type: "in_channel",
-    //   channel: data.channel_id,
-    //   text: "Hello :slightly_smiling_face:",
-    //   attachments: [
-    //     {
-    //       text: level_info?.message,
-    //       fallback: level_info?.message,
-    //       color: "#2c963f",
-    //       attachment_type: "default",
-    //       callback_id: level_info?.next,
-    //       actions: [
-    //         {
-    //           name: "response_selection",
-    //           text: "Select a response",
-    //           type: "select",
-    //           options: level_info?.dropDownValues,
-    //         },
-    //       ],
-    //     },
-    //   ],
-    // };
-    const resObject = {
-      // blocks: [
-      //   {
-      //     type: "section",
-      //     block_id: "section678",
-      //     text: {
-      //       type: "mrkdwn",
-      //       text: "Pick an item from the dropdown list",
-      //     },
-      //     accessory: {
-      //       action_id: "text1234",
-      //       type: "static_select",
-      //       placeholder: {
-      //         type: "plain_text",
-      //         text: "Select an item",
-      //       },
-      //       options: [
-      //         {
-      //           text: {
-      //             type: "plain_text",
-      //             text: "*this is plain_text text*",
-      //           },
-      //           value: "value-0",
-      //         },
-      //         {
-      //           text: {
-      //             type: "plain_text",
-      //             text: "*this is plain_text text*",
-      //           },
-      //           value: "value-1",
-      //         },
-      //         {
-      //           text: {
-      //             type: "plain_text",
-      //             text: "*this is plain_text text*",
-      //           },
-      //           value: "value-2",
-      //         },
-      //       ],
-      //     },
-      //   },
-      // ],
-
+    const action = "action_1";
+    const action_info = getActionInformation(action);
+    const resObject: ISlackCommandResponse = {
+      response_type: "in_channel",
+      channel: data.channel_id,
+      text: "Hello :slightly_smiling_face:",
       attachments: [
         {
-          color: "#f2c744",
-          blocks: [
+          text: action_info?.message,
+          fallback: action_info?.message,
+          color: "#2c963f",
+          attachment_type: "default",
+          callback_id: action_info?.next,
+
+          block: [
             {
               type: "section",
-              block_id: "section678",
+              block_id: action,
               text: {
                 type: "mrkdwn",
-                text: "Pick items from the list",
+                text: "Please Select",
               },
               accessory: {
-                action_id: "text1234",
-                type: "multi_static_select",
+                action_id: action_info?.next,
+                type: "static_select",
                 placeholder: {
                   type: "plain_text",
-                  text: "Select items",
+                  text: "Select an item",
                 },
-                options: [
-                  {
-                    text: {
-                      type: "plain_text",
-                      text: "*this is plain_text text*",
-                    },
-                    value: "value-0",
-                  },
-                  {
-                    text: {
-                      type: "plain_text",
-                      text: "*this is plain_text text*",
-                    },
-                    value: "value-1",
-                  },
-                  {
-                    text: {
-                      type: "plain_text",
-                      text: "*this is plain_text text*",
-                    },
-                    value: "value-2",
-                  },
-                ],
+                options: action_info?.dropDownValues,
               },
             },
           ],
@@ -126,24 +50,55 @@ class Services {
   }
 
   async message(data: ISlackMessageObject) {
-    const { callback_id } = data;
-    const level_info = getLevelInformation(callback_id);
+    const { actions, user, channel } = data;
 
-    let response: ISlackMessageReponse = {
+    const action = actions[0];
+    const action_id = action.action_id;
+    const action_info = getActionInformation(action_id);
+
+    let block: ISlackResponse[] = [
+      {
+        block_id: action_id,
+        type: "section",
+        text:
+          action_id === ACTION_TYPES.action_end
+            ? { type: "mrkdwn", text: action_info?.message }
+            : { type: "mrkdwn", text: "Please Select" },
+      },
+    ];
+
+    if (action_id !== ACTION_TYPES.action_end) {
+      let current_block: ISlackResponse = {
+        ...block[0],
+        accessory: {
+          type: action_info?.interactive_type,
+          action_id: action_info?.next,
+          placeholder: {
+            type: "plain_text",
+            text: "Select item(s) from the list",
+          },
+          options: action_info?.dropDownValues,
+        },
+      };
+
+      block[0] = current_block;
+    }
+
+    const resObject: ISlackCommandResponse = {
       response_type: "in_channel",
       channel: data.channel.id,
-      text: level_info?.message + ":slightly_smiling_face:",
-      response_url: data.response_url,
+      attachments: [
+        {
+          text: action_info?.message,
+          color: "#2c963f",
+          fallback: action_info?.message,
+          attachment_type: "default",
+          block,
+        },
+      ],
     };
 
-    if (level_info?.dropDownValues && level_info.dropDownValues.length > 0) {
-      response.blocks = [
-        {
-          type: "section",
-          block_id: "section",
-        },
-      ];
-    }
+    return resObject;
   }
 }
 

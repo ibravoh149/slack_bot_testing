@@ -1,36 +1,41 @@
-import { IUserResponses } from "../Controller/interfaces";
+import { ACTION_TYPES, IUserResponses } from "../Controller/interfaces";
 
 const responseInformation: IUserResponses[] = [
   {
-    key: "level_1",
+    key: ACTION_TYPES.action_1,
     dropDownValues: [
-      { text: "Doing Well", value: "Doing Well" },
-      { text: "Neutral", value: "Neutral" },
-      { text: "Feeling Lucky", value: "Feeling Lucky" },
+      { text: { text: "Doing Well", type: "Plain_text" }, value: "Doing Well" },
+      { text: { text: "Neutral", type: "Plain_text" }, value: "Neutral" },
+      {
+        text: { text: "Feeling Lucky", type: "Plain_text" },
+        value: "Feeling Lucky",
+      },
     ],
     message: "Welcome. How are you doing?",
-    next: "level_2",
+    next: ACTION_TYPES.action_2,
+    interactive_type: "static_select",
   },
   {
-    key: "level_2",
+    key: ACTION_TYPES.action_2,
     dropDownValues: [
-      { text: "Football", value: "Football" },
-      { text: "Music", value: "Music" },
-      { text: "Sleep", value: "Sleep" },
-      { text: "Movies", value: "Movies" },
-      { text: "Basketball", value: "Basketball" },
+      { text: { text: "Football", type: "Plain_text" }, value: "Football" },
+      { text: { text: "Music", type: "Plain_text" }, value: "Music" },
+      { text: { text: "Sleep", type: "Plain_text" }, value: "Sleep" },
+      { text: { text: "Movies", type: "Plain_text" }, value: "Movies" },
+      { text: { text: "Basketball", type: "Plain_text" }, value: "Basketball" },
     ],
     message: "What are your favorite hobbies",
-    next: "level_3",
+    next: ACTION_TYPES.action_end,
+    interactive_type: "multi_static_select",
   },
   {
-    key: "level_3",
+    key: ACTION_TYPES.action_end,
     dropDownValues: [],
     message: "thank you",
   },
 ];
 
-export const getLevelInformation = (
+export const getActionInformation = (
   key: string
 ): IUserResponses | undefined => {
   if (!key) {
