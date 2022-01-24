@@ -9,7 +9,7 @@ export const verify_key = (req: Request, res: Response, next: NextFunction) => {
   const secret = process.env.SLACK_SIGNING_SECRET;
   let time = Math.floor(new Date().getTime() / 1000);
 
-  if (time - Number(timeStamp) > 60 * 5) {
+  if (Math.abs(time - Number(timeStamp)) > 60 * 5) {
     console.log("failed tme");
     return res.status(401).send("ignored");
   }
