@@ -101,7 +101,7 @@ class Services {
       ],
     };
 
-    await this.postMessage(resObject, responseUrl as string);
+    return await this.postMessage(resObject, responseUrl as string);
   }
 
   async postMessage(data: ISlackCommandResponse, url: string) {
