@@ -101,7 +101,7 @@ export interface ISlackCommandResponse {
     color?: string;
     attachment_type?: string;
     callback_id?: string;
-    block?: ISlackResponse[];
+    blocks?: ISlackResponse[];
   }[];
 }
 

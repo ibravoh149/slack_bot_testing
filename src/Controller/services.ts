@@ -21,9 +21,9 @@ class Services {
           fallback: action_info?.message,
           color: "#2c963f",
           attachment_type: "default",
-          callback_id: action_info?.next,
+          // callback_id: action_info?.next,
 
-          block: [
+          blocks: [
             {
               type: "section",
               block_id: action,
@@ -56,7 +56,7 @@ class Services {
     const action_id = action?.action_id;
     const action_info = getActionInformation(action_id as string);
 
-    let block: ISlackResponse[] = [
+    let blocks: ISlackResponse[] = [
       {
         block_id: action_id,
         type: "section",
@@ -69,7 +69,7 @@ class Services {
 
     if (action_id !== ACTION_TYPES.action_end) {
       let current_block: ISlackResponse = {
-        ...block[0],
+        ...blocks[0],
         accessory: {
           type: action_info?.interactive_type,
           action_id: action_info?.next,
@@ -81,7 +81,7 @@ class Services {
         },
       };
 
-      block[0] = current_block;
+      blocks[0] = current_block;
     }
 
     const resObject: ISlackCommandResponse = {
@@ -93,7 +93,7 @@ class Services {
           color: "#2c963f",
           fallback: action_info?.message,
           attachment_type: "default",
-          block,
+          blocks,
         },
       ],
     };
