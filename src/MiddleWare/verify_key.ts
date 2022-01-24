@@ -7,8 +7,10 @@ export const verify_key = (req: Request, res: Response, next: NextFunction) => {
   console.log(timeStamp);
   console.log(slack_sig);
   const secret = process.env.SLACK_SIGNING_SECRET;
+  let time = Math.floor(new Date().getTime() / 1000);
 
-  if (Math.abs(new Date().getTime() - Number(timeStamp)) > 60 * 5) {
+  if (time - Number(timeStamp) > 60 * 5) {
+    console.log("failed tme");
     return res.status(401).send("ignored");
   }
   const request: any = req;
@@ -21,13 +23,13 @@ export const verify_key = (req: Request, res: Response, next: NextFunction) => {
       .update(sig_basestring as string)
       .digest("hex");
 
-  // console.log(
-  //   "is Valid",
-  //   crypto.timingSafeEqual(
-  //     Buffer.from(hmac as string, "utf-8"),
-  //     Buffer.from(slack_sig as string, "utf-8")
-  //   )
-  // );
+  console.log(
+    "is Valid",
+    crypto.timingSafeEqual(
+      Buffer.from(hmac as string, "utf-8"),
+      Buffer.from(slack_sig as string, "utf-8")
+    )
+  );
   //   if (crypto.timingSafeEqual(
   //     Buffer.from(hmac, 'utf8'),
   //     Buffer.from(slack_sig as string, 'utf8'))) {
