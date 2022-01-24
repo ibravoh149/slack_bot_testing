@@ -14,7 +14,10 @@ export const verify_key = (req: Request, res: Response, next: NextFunction) => {
 
   const hmac =
     "v0=" +
-    crypto.createHmac("sha256", secret).update(sig_basestring).digest("hex");
+    crypto
+      .createHmac("sha256", secret as any)
+      .update(sig_basestring as any)
+      .digest("hex");
 
   console.log(
     "is Valid",
