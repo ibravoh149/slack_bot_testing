@@ -38,7 +38,30 @@ class Services {
                   type: "plain_text",
                   text: "Select an item",
                 },
-                options: action_info?.dropDownValues,
+                // options: action_info?.dropDownValues,
+                options: [
+                  {
+                    text: {
+                      type: "plain_text",
+                      text: "*this is plain_text text*",
+                    },
+                    value: "value-0",
+                  },
+                  {
+                    text: {
+                      type: "plain_text",
+                      text: "*this is plain_text text*",
+                    },
+                    value: "value-1",
+                  },
+                  {
+                    text: {
+                      type: "plain_text",
+                      text: "*this is plain_text text*",
+                    },
+                    value: "value-2",
+                  },
+                ],
               },
             },
           ],
