@@ -15,13 +15,16 @@ export const verify_key = (req: Request, res: Response, next: NextFunction) => {
   const hmac =
     "v0=" +
     crypto
-      .createHmac("sha256", secret as any)
-      .update(sig_basestring as any)
+      .createHmac("sha256", secret as string)
+      .update(sig_basestring as string)
       .digest("hex");
 
   console.log(
     "is Valid",
-    crypto.timingSafeEqual(Buffer.from(hmac), Buffer.from(slack_sig as string))
+    crypto.timingSafeEqual(
+      Buffer.from(hmac as string, "utf-8"),
+      Buffer.from(slack_sig as string, "utf-8")
+    )
   );
   //   if (crypto.timingSafeEqual(
   //     Buffer.from(hmac, 'utf8'),
