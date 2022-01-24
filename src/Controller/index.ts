@@ -28,7 +28,7 @@ class AppController {
     // console.log(data.payload);
 
     // return res.status(200).json(JSON.parse(dt));
-    const response = await services.message(JSON.parse(JSON.stringify(data)));
+    const response = await services.message(JSON.parse(data));
     return res.json(response);
   }
 }
