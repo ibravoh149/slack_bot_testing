@@ -6,6 +6,7 @@ import {
   ISlackResponse,
   ACTION_TYPES,
 } from "./interfaces";
+import axios from "axios";
 
 class Services {
   async command(data: ISlackCommandBodyObject) {
@@ -14,11 +15,11 @@ class Services {
     const resObject: ISlackCommandResponse = {
       // response_type: "in_channel",
       channel: data.channel_id,
-      text: "Hello :slightly_smiling_face:",
+      text: action_info?.message + " :slightly_smiling_face:",
       attachments: [
         {
-          text: action_info?.message,
-          fallback: action_info?.message,
+          // text: action_info?.message,
+          // fallback: action_info?.message,
           color: "#2c963f",
           // attachment_type: "default",
           // callback_id: action_info?.next,
@@ -39,29 +40,6 @@ class Services {
                   text: "Select an item",
                 },
                 options: action_info?.dropDownValues,
-                // options: [
-                //   {
-                //     text: {
-                //       type: "mrkdwn",
-                //       text: "this is plain_text text",
-                //     },
-                //     value: "value-0",
-                //   },
-                //   {
-                //     text: {
-                //       type: "plain_text",
-                //       text: "this is plain_text text",
-                //     },
-                //     value: "value-1",
-                //   },
-                //   {
-                //     text: {
-                //       type: "plain_text",
-                //       text: "this is plain_text text",
-                //     },
-                //     value: "value-2",
-                //   },
-                // ],
               },
             },
           ],
@@ -78,6 +56,7 @@ class Services {
     const action = data.actions && data.actions[0];
     const action_id = action?.action_id;
     const action_info = getActionInformation(action_id as string);
+    const responseUrl = data.response_url;
 
     let blocks: ISlackResponse[] = [
       {
@@ -108,21 +87,33 @@ class Services {
     }
 
     const resObject: ISlackCommandResponse = {
-      response_type: "in_channel",
+      // response_type: "in_channel",
       channel: data.channel.id,
       text: action_info?.message,
       attachments: [
         {
-          text: action_info?.message,
+          // text: action_info?.message,
           color: "#2c963f",
-          fallback: action_info?.message,
-          attachment_type: "default",
+          // fallback: action_info?.message,
+          // attachment_type: "default",
           blocks,
         },
       ],
     };
 
-    return resObject;
+    await this.postMessage(resObject, responseUrl as string);
+  }
+
+  async postMessage(data: ISlackCommandResponse, url: string) {
+    try {
+      await axios({
+        method: "POST",
+        url,
+        data: data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 
