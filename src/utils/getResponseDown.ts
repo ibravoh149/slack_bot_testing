@@ -4,10 +4,10 @@ const responseInformation: IUserResponses[] = [
   {
     key: ACTION_TYPES.action_1,
     dropDownValues: [
-      { text: { text: "Doing Well", type: "Plain_text" }, value: "Doing Well" },
-      { text: { text: "Neutral", type: "Plain_text" }, value: "Neutral" },
+      { text: { text: "Doing Well", type: "plain_text" }, value: "Doing Well" },
+      { text: { text: "Neutral", type: "plain_text" }, value: "Neutral" },
       {
-        text: { text: "Feeling Lucky", type: "Plain_text" },
+        text: { text: "Feeling Lucky", type: "plain_text" },
         value: "Feeling Lucky",
       },
     ],
@@ -18,11 +18,11 @@ const responseInformation: IUserResponses[] = [
   {
     key: ACTION_TYPES.action_2,
     dropDownValues: [
-      { text: { text: "Football", type: "Plain_text" }, value: "Football" },
-      { text: { text: "Music", type: "Plain_text" }, value: "Music" },
-      { text: { text: "Sleep", type: "Plain_text" }, value: "Sleep" },
-      { text: { text: "Movies", type: "Plain_text" }, value: "Movies" },
-      { text: { text: "Basketball", type: "Plain_text" }, value: "Basketball" },
+      { text: { text: "Football", type: "plain_text" }, value: "Football" },
+      { text: { text: "Music", type: "plain_text" }, value: "Music" },
+      { text: { text: "Sleep", type: "plain_text" }, value: "Sleep" },
+      { text: { text: "Movies", type: "plain_text" }, value: "Movies" },
+      { text: { text: "Basketball", type: "plain_text" }, value: "Basketball" },
     ],
     message: "What are your favorite hobbies",
     next: ACTION_TYPES.action_end,
