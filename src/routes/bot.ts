@@ -6,7 +6,7 @@ const router: express.Router = express.Router();
 router.post("/bot", verify_key, AppController.command.bind(AppController));
 router.post(
   "/messages",
-  // verify_key,
+  verify_key,
   AppController.interact.bind(AppController)
 );
 export default router;

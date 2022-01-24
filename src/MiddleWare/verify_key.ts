@@ -25,11 +25,10 @@ export const verify_key = (req: Request, res: Response, next: NextFunction) => {
 
   console.log(
     "is Valid",
-    crypto.timingSafeEqual(
-      Buffer.from(hmac as string, "utf-8"),
-      Buffer.from(slack_sig as string, "utf-8")
-    )
+    crypto.timingSafeEqual(Buffer.from(hmac), Buffer.from(slack_sig as string))
   );
+
+  console.log("hmac", hmac);
   //   if (crypto.timingSafeEqual(
   //     Buffer.from(hmac, 'utf8'),
   //     Buffer.from(slack_sig as string, 'utf8'))) {
