@@ -15,7 +15,7 @@ class AppController {
   async interact(req: Request, res: Response) {
     const data = req.body;
     await services.message(JSON.parse(data.payload));
-    return res.send();
+    return res.send("Ok");
   }
 }
 
