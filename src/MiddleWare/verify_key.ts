@@ -4,6 +4,7 @@ import crypto from "crypto";
 export const verify_key = (req: Request, res: Response, next: NextFunction) => {
   const timeStamp = req.headers["x-slack-request-timestamp"];
   const slack_sig = req.headers["x-slack-signature"];
+  console.log(timeStamp);
   console.log(slack_sig);
   const secret = process.env.SLACK_SIGNING_SECRET;
 
