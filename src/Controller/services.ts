@@ -50,11 +50,11 @@ class Services {
   }
 
   async message(data: ISlackMessageObject) {
-    const { actions, user, channel } = data;
+    // const { actions, user, channel } = data;
 
-    const action = actions[0];
-    const action_id = action.action_id;
-    const action_info = getActionInformation(action_id);
+    const action = data.actions && data.actions[0];
+    const action_id = action?.action_id;
+    const action_info = getActionInformation(action_id as string);
 
     let block: ISlackResponse[] = [
       {
