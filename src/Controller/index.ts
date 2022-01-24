@@ -28,8 +28,8 @@ class AppController {
     // console.log(data.payload);
 
     // return res.status(200).json(JSON.parse(dt));
-    const response = await services.message(JSON.parse(data.payload));
-    return res.json(response);
+    await services.message(JSON.parse(data.payload));
+    return res.status(200);
   }
 }
 
