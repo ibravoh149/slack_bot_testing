@@ -14,8 +14,13 @@ class AppController {
 
   async interact(req: Request, res: Response) {
     const data = req.body;
-    await services.message(JSON.parse(data.payload));
+    await services.message(JSON.parse(JSON.stringify(data.payload)));
     return res.send("Ok");
+  }
+
+  async getHistory(req: Request, res: Response) {
+    const result = await services.getHistories();
+    return res.status(200).json(result);
   }
 }
 

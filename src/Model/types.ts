@@ -11,7 +11,7 @@ export interface IMsg {
 
 interface Iconversaton {
   bot: IMsg;
-  user: IMsg;
+  user?: IMsg;
   action_id: string;
 }
 export interface IBotMessages {
@@ -20,7 +20,7 @@ export interface IBotMessages {
   user: IUser;
   command: string;
   block_id: string;
-  conversation?: Iconversaton[];
+  conversation: Iconversaton[];
 }
 
 export interface IBotMessagesDocument extends IBotMessages, Document {}

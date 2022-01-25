@@ -5,6 +5,10 @@ export enum ACTION_TYPES {
   action_2 = "action_2",
   action_end = "action_end",
 }
+export enum INTERACTIVE_TYPE {
+  static_select = "static_select",
+  multi_static_select = "multi_static_select",
+}
 export interface ISlackCommandBodyObject {
   token?: string;
   team_id?: string;

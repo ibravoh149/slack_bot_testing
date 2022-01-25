@@ -1,4 +1,8 @@
-import { ACTION_TYPES, IUserResponses } from "../Controller/interfaces";
+import {
+  ACTION_TYPES,
+  INTERACTIVE_TYPE,
+  IUserResponses,
+} from "../Controller/interfaces";
 
 const responseInformation: IUserResponses[] = [
   {
@@ -13,7 +17,7 @@ const responseInformation: IUserResponses[] = [
     ],
     message: "Welcome. How are you doing?",
     next: ACTION_TYPES.action_2,
-    interactive_type: "static_select",
+    interactive_type: INTERACTIVE_TYPE.static_select,
   },
   {
     key: ACTION_TYPES.action_2,
@@ -26,7 +30,7 @@ const responseInformation: IUserResponses[] = [
     ],
     message: "What are your favorite hobbies",
     next: ACTION_TYPES.action_end,
-    interactive_type: "multi_static_select",
+    interactive_type: INTERACTIVE_TYPE.multi_static_select,
   },
   {
     key: ACTION_TYPES.action_end,

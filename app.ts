@@ -7,7 +7,7 @@ import routes from "./src/routes";
 import * as dotenv from "dotenv";
 import { applyMiddleware } from "./src/MiddleWare/applyMiddleware";
 import errorHandlers from "./src/MiddleWare/errorHandlers";
-// import { connect } from "./src/connection";
+import { connect } from "./src/connection";
 
 dotenv.config();
 
@@ -27,7 +27,7 @@ class App {
     this.express = express();
     this.middlewareConfig();
     this.routeConfig();
-    // connect();
+    connect();
     applyMiddleware(errorHandlers, this.express);
   }
 

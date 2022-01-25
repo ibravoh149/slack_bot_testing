@@ -6,21 +6,64 @@ import {
   ISlackResponse,
   ACTION_TYPES,
   IHistoryObject,
+  INTERACTIVE_TYPE,
 } from "./interfaces";
 import axios from "axios";
 import shortid from "shortid";
 import { BotMessages } from "../Model/model";
+import { IBotMessagesDocument, IMsg } from "../Model/types";
 
 class Services {
-  // private async createHistory(data: IHistoryObject) {
-  //   return await new BotMessages(data).save();
-  // }
+  private async createHistory(data: IHistoryObject) {
+    return await new BotMessages(data).save();
+  }
 
-  // private async updateHistory() {}
+  private async updateHistory(
+    newEntry: Record<string, any>,
+    userResponse: Record<string, any>,
+    history: IBotMessagesDocument
+  ) {
+    history.conversation.push({
+      action_id: newEntry.action_id,
+      bot: { message: newEntry.message },
+    });
+    if (userResponse.responses) {
+      let conversations = history.conversation;
+      const conversation_index = conversations.findIndex(
+        (con) => con.action_id === userResponse.action_id
+      );
+      if (conversation_index >= 0) {
+        conversations[conversation_index].user = {
+          message: Array.isArray(userResponse.responses)
+            ? userResponse.responses.join(",")
+            : userResponse.responses,
+          time: new Date(),
+        };
+        history.conversation = conversations;
+      }
+    }
 
-  // private async getHistory(block_id: string) {
-  //   return await BotMessages.findOne({ block_id });
-  // }
+    await history.save();
+    return await Promise.resolve();
+  }
+
+  private async getHistory(block_id: string) {
+    return await BotMessages.findOne({ block_id });
+  }
+
+  private async getUserResponse(
+    selected_option: Record<string, any> | Record<string, any>[]
+  ) {
+    let response: string | string[] = [];
+    if (!Array.isArray(selected_option)) {
+      response = selected_option.value;
+    } else {
+      response = selected_option.map((option) => {
+        return option.value;
+      });
+    }
+    return response;
+  }
 
   async command(data: ISlackCommandBodyObject) {
     const action = "action_1";
@@ -55,16 +98,16 @@ class Services {
       ],
     };
 
-    // await this.createHistory({
-    //   user: { id: data.user_id, name: data.user_name },
-    //   block_id,
-    //   command: data.command as string,
-    //   conversation: [
-    //     { bot: { message: action_info?.message }, action_id: action },
-    //   ],
-    //   channel_id: data.channel_id,
-    //   channel_name: data.channel_name,
-    // });
+    await this.createHistory({
+      user: { id: data.user_id, name: data.user_name },
+      block_id,
+      command: data.command as string,
+      conversation: [
+        { bot: { message: action_info?.message }, action_id: action },
+      ],
+      channel_id: data.channel_id,
+      channel_name: data.channel_name,
+    });
     return resObject;
   }
 
@@ -81,10 +124,7 @@ class Services {
       {
         block_id: action?.block_id,
         type: "section",
-        text:
-          // action_id === ACTION_TYPES.action_end
-          { type: "mrkdwn", text: "Thank you" },
-        // : { type: "mrkdwn", text: "Please Select" },
+        text: { type: "mrkdwn", text: "Thank you" },
       },
     ];
 
@@ -111,6 +151,30 @@ class Services {
       blocks[0] = current_block;
     }
 
+    const history = await this.getHistory(action?.block_id as string);
+
+    if (history) {
+      let userResponse: Record<string, any> = {
+        action_id,
+        responses: null,
+      };
+
+      if (data.type === "block_actions") {
+        userResponse.responses = await this.getUserResponse(
+          action?.type === INTERACTIVE_TYPE.multi_static_select
+            ? (action.selected_options as Record<string, any>[])
+            : (action?.selected_option as Record<string, any>)
+        );
+      }
+
+      const newEntry: Record<string, any> = {
+        message: next_action_info?.message,
+        action_id: next_action_info?.key as string,
+      };
+
+      await this.updateHistory(newEntry, userResponse, history);
+    }
+
     const resObject: ISlackCommandResponse = {
       channel: data.channel.id,
       text: next_action_info?.message,
@@ -135,6 +199,10 @@ class Services {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  async getHistories() {
+    return await BotMessages.find({}).lean().exec();
   }
 }
 

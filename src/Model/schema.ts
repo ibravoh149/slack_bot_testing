@@ -17,16 +17,12 @@ const BankAccountSchema = new Schema(
     block_id: { type: String, unique: true },
     conversation: [
       {
-        sender: {
-          sender_type: String,
-          message: String,
-          time: { type: Date, default: new Date() },
+        bot: { message: String, time: { type: Date, default: new Date() } },
+        user: {
+          message: Schema.Types.Mixed,
+          time: { type: Date },
         },
-        // user: {
-        //   message: Schema.Types.Mixed,
-        //   time: { type: Date },
-        // },
-        // action_id: { type: String },
+        action_id: { type: String },
       },
     ],
   },
