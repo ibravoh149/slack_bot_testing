@@ -91,16 +91,21 @@ class Services {
     if (action_id !== ACTION_TYPES.action_end) {
       let current_block: ISlackResponse = {
         ...blocks[0],
-        accessory: {
-          type: next_action_info?.interactive_type,
-          action_id: next_action_info?.key,
-          placeholder: {
-            type: "plain_text",
-            text: "Select item(s) from the list",
-          },
-          options: next_action_info?.dropDownValues,
-        },
       };
+      if (next_action_info?.key !== ACTION_TYPES.action_end) {
+        current_block = {
+          ...current_block,
+          accessory: {
+            type: next_action_info?.interactive_type,
+            action_id: next_action_info?.key,
+            placeholder: {
+              type: "plain_text",
+              text: "Select item(s) from the list",
+            },
+            options: next_action_info?.dropDownValues,
+          },
+        };
+      }
 
       blocks[0] = current_block;
     }
