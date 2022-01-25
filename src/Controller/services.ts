@@ -82,9 +82,9 @@ class Services {
         block_id: action?.block_id,
         type: "section",
         text:
-          action_id === ACTION_TYPES.action_end
-            ? { type: "mrkdwn", text: "Thank you" }
-            : { type: "mrkdwn", text: "Please Select" },
+          // action_id === ACTION_TYPES.action_end
+          { type: "mrkdwn", text: "Thank you" },
+        // : { type: "mrkdwn", text: "Please Select" },
       },
     ];
 
@@ -95,6 +95,7 @@ class Services {
       if (next_action_info?.key !== ACTION_TYPES.action_end) {
         current_block = {
           ...current_block,
+          text: { type: "mrkdwn", text: "Please Select" },
           accessory: {
             type: next_action_info?.interactive_type,
             action_id: next_action_info?.key,
