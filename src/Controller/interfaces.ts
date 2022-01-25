@@ -1,3 +1,5 @@
+import { IMsg } from "../Model/types";
+
 export enum ACTION_TYPES {
   action_1 = "action_1",
   action_2 = "action_2",
@@ -164,4 +166,20 @@ export interface IUserResponses {
   message: string;
   next?: string;
   interactive_type?: string;
+}
+
+export interface IHistoryObject {
+  user: {
+    id?: string;
+    name?: string;
+  };
+  block_id: string;
+  channel_id?: string;
+  channel_name?: string;
+  command: string;
+  conversation: {
+    bot?: IMsg;
+    user?: IMsg;
+    action_id?: string;
+  }[];
 }

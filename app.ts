@@ -4,10 +4,10 @@ import cors from "cors";
 import compression from "compression";
 import morgan from "morgan";
 import routes from "./src/routes";
-// import {connect} from "./config/connection"
 import * as dotenv from "dotenv";
 import { applyMiddleware } from "./src/MiddleWare/applyMiddleware";
 import errorHandlers from "./src/MiddleWare/errorHandlers";
+// import { connect } from "./src/connection";
 
 dotenv.config();
 
@@ -27,7 +27,7 @@ class App {
     this.express = express();
     this.middlewareConfig();
     this.routeConfig();
-    // connect()
+    // connect();
     applyMiddleware(errorHandlers, this.express);
   }
 

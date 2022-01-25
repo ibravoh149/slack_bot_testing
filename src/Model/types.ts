@@ -1,17 +1,28 @@
-import { Document, Model, Types } from "mongoose";
-
-export interface IBankAccount {
-  bankName: string;
-  accountNumber: string;
-  isDeleted?: Boolean;
-  deletedOn?: Date;
-  isActive: boolean;
-  sortCode: string;
-  businessId: string;
-  isDefault: boolean;
-  accountName?:string | null
+import { Document, Model } from "mongoose";
+interface IUser {
+  name: string;
+  id: string;
 }
 
-export interface IBankAccountDocument extends IBankAccount, Document {}
+export interface IMsg {
+  message?: string | string[];
+  time?: Date;
+}
 
-export interface IBankAccountModel extends Model<IBankAccountDocument> {}
+interface Iconversaton {
+  bot: IMsg;
+  user: IMsg;
+  action_id: string;
+}
+export interface IBotMessages {
+  channel_name: string;
+  channel_id: string;
+  user: IUser;
+  command: string;
+  block_id: string;
+  conversation?: Iconversaton[];
+}
+
+export interface IBotMessagesDocument extends IBotMessages, Document {}
+
+export interface IBotMessagesModel extends Model<IBotMessagesDocument> {}

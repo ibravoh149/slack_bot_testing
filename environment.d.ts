@@ -1,10 +1,12 @@
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      NODE_ENV: "development" | "production";
+      NODE_ENV: "development" | "production" | "test";
       PORT?: string;
       SLACK_SIGNING_SECRET: string;
       SLACK_BOT_TOKEN: string;
+      MONGO_URI: string;
+      MONGO_URI_TEST: string;
       // APP_TOKEN: string;
     }
   }

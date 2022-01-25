@@ -1,46 +1,60 @@
 import { Schema } from "mongoose";
-import schemaOptions from "../schemOptions";
 
 const BankAccountSchema = new Schema(
   {
-    bankName: {
+    channel_name: {
       type: String,
       required: true,
     },
-    accountNumber: {
+    channel_id: {
       type: String,
     },
-    accountName: {
-      type: String,
-      default: null,
+    user: {
+      name: { type: String, default: null },
+      id: { type: String, default: null },
     },
-    businessId: {
-      required: true,
-      type: Schema.Types.ObjectId,
-      // ref: "businesses",
-    },
-    sortCode: {
-      type: String,
-      default: null,
-    },
-    isDeleted: {
-      type: Boolean,
-      default: false,
-    },
-    deletedOn: {
-      type: Date,
-      default: null,
-    },
-    isDefault: {
-      type: Boolean,
-      default: false,
-    },
-    isActive: {
-      type: Boolean,
-      default: true,
-    },
+    command: String,
+    block_id: { type: String, unique: true },
+    conversation: [
+      {
+        sender: {
+          sender_type: String,
+          message: String,
+          time: { type: Date, default: new Date() },
+        },
+        // user: {
+        //   message: Schema.Types.Mixed,
+        //   time: { type: Date },
+        // },
+        // action_id: { type: String },
+      },
+    ],
   },
-  schemaOptions
+  {
+    minimize: false,
+    id: false,
+    toJSON: {
+      getters: true,
+      virtuals: true,
+      minimize: false,
+      versionKey: false,
+      // retainKeyOrder: true
+    },
+    toObject: {
+      getters: true,
+      virtuals: true,
+      minimize: false,
+      versionKey: false,
+      // retainKeyOrder: true
+    },
+
+    // autoIndex: false,
+    safe: true,
+    timestamps: true,
+    // usePushEach: true,
+    // useFindAndModify:false,
+    strict: process.env.NODE_ENV !== "development",
+  } // Only use strict in production}
 );
 
 export default BankAccountSchema;
