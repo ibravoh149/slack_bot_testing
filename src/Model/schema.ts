@@ -17,7 +17,10 @@ const BankAccountSchema = new Schema(
     block_id: { type: String, unique: true },
     conversation: [
       {
-        bot: { message: String, time: { type: Date, default: new Date() } },
+        bot: {
+          message: String,
+          time: { type: Date, default: () => new Date() },
+        },
         user: {
           message: Schema.Types.Mixed,
           time: { type: Date },

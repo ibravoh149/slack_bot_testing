@@ -1,4 +1,4 @@
-import { getActionInformation } from "../utils/getResponseDown";
+import { getActionInformation } from "../utils/getResponseValues";
 import {
   ISlackCommandBodyObject,
   ISlackCommandResponse,

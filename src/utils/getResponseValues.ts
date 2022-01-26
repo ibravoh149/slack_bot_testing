@@ -4,8 +4,8 @@ import {
   IUserResponses,
 } from "../Controller/interfaces";
 
-const responseInformation: IUserResponses[] = [
-  {
+const responseInformation = {
+  [`${ACTION_TYPES.action_1}`]: {
     key: ACTION_TYPES.action_1,
     dropDownValues: [
       { text: { text: "Doing Well", type: "plain_text" }, value: "Doing Well" },
@@ -19,7 +19,8 @@ const responseInformation: IUserResponses[] = [
     next: ACTION_TYPES.action_2,
     interactive_type: INTERACTIVE_TYPE.static_select,
   },
-  {
+
+  [`${ACTION_TYPES.action_2}`]: {
     key: ACTION_TYPES.action_2,
     dropDownValues: [
       { text: { text: "Football", type: "plain_text" }, value: "Football" },
@@ -32,20 +33,16 @@ const responseInformation: IUserResponses[] = [
     next: ACTION_TYPES.action_end,
     interactive_type: INTERACTIVE_TYPE.multi_static_select,
   },
-  {
+
+  [`${ACTION_TYPES.action_end}`]: {
     key: ACTION_TYPES.action_end,
     dropDownValues: [],
     message: "thank you",
   },
-];
+};
 
 export const getActionInformation = (
   key: string
 ): IUserResponses | undefined => {
-  if (!key) {
-    return undefined;
-  }
-  return responseInformation.find((response) => {
-    return response.key.toLowerCase() === key.toLowerCase();
-  });
+  return responseInformation[key];
 };

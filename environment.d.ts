@@ -7,6 +7,8 @@ declare global {
       SLACK_BOT_TOKEN: string;
       MONGO_URI: string;
       MONGO_URI_TEST: string;
+      SLACK_VERIFICATION_TOKEN: string;
+      SLACK_WEBHOOK: string;
       // APP_TOKEN: string;
     }
   }

@@ -75,7 +75,7 @@ export interface ISlackMessageObject {
     placeholder?: {
       type: string;
       text: string;
-      emoji: boolean;
+      emoji?: boolean;
     };
     action_ts?: string;
     data_source: string;
@@ -92,7 +92,7 @@ interface SelectedOption {
   text?: {
     type?: string;
     text?: string;
-    "emoji?": boolean;
+    emoji?: boolean;
   };
   value?: string;
 }
