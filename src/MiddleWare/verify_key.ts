@@ -31,6 +31,8 @@ export const verify_key = (req: Request, res: Response, next: NextFunction) => {
       )
     ) {
       console.log("failed at key");
+      console.log("mine", hmac);
+      console.log("slack", slack_sig);
       return res.status(401).send("Verification failed");
     }
     return next();
