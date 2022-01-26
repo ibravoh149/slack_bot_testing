@@ -8,6 +8,9 @@ export const verify_key = (req: Request, res: Response, next: NextFunction) => {
     const slack_sig = req.headers["x-slack-signature"];
     const body = qs.stringify(req.body, { format: "RFC1738" });
 
+    console.log("slack_sig ", slack_sig);
+    console.log("body ", body);
+
     const secret = process.env.SLACK_SIGNING_SECRET;
     let time = Math.floor(new Date().getTime() / 1000);
 
