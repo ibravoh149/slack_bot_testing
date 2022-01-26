@@ -90,7 +90,7 @@ class Services {
               },
               accessory: {
                 action_id: action,
-                type: "static_select",
+                type: action_info?.interactive_type,
                 placeholder: {
                   type: "plain_text",
                   text: "Select an item",
