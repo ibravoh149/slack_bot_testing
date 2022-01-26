@@ -12,6 +12,7 @@ export const verify_key = (req: Request, res: Response, next: NextFunction) => {
     let time = Math.floor(new Date().getTime() / 1000);
 
     if (Math.abs(time - Number(timeStamp)) > 60 * 5) {
+      console.log("failed at time");
       return res.status(401).send("ignored");
     }
     const sig_basestring = "v0:" + timeStamp + ":" + body;
@@ -29,6 +30,7 @@ export const verify_key = (req: Request, res: Response, next: NextFunction) => {
         Buffer.from(slack_sig as string)
       )
     ) {
+      console.log("failed at key");
       return res.status(401).send("Verification failed");
     }
     return next();
