@@ -12,7 +12,10 @@ import axios from "axios";
 import shortid from "shortid";
 import { BotMessages } from "../Model/model";
 import { IBotMessagesDocument, IMsg } from "../Model/types";
-import cryptoRandomString from "crypto-random-string";
+// import * as cryptoRandomString from "crypto-random-string";
+shortid.characters(
+  "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@"
+);
 
 class Services {
   private async createHistory(data: IHistoryObject) {
@@ -69,7 +72,8 @@ class Services {
   async command(data: ISlackCommandBodyObject) {
     const action = "action_1";
     const action_info = getActionInformation(action);
-    const block_id = cryptoRandomString({ type: "alphanumeric", length: 10 });
+    // const block_id = cryptoRandomString({ type: "alphanumeric", length: 10 });
+    const block_id = shortid.generate();
     const resObject: ISlackCommandResponse = {
       channel: data.channel_id,
       text: action_info?.message + " :slightly_smiling_face:",
