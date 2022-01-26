@@ -18,7 +18,7 @@ export const verify_key = (req: Request, res: Response, next: NextFunction) => {
       console.log("failed at time");
       return res.status(401).send("ignored");
     }
-    const sig_basestring = "v0:" + timeStamp + ":" + body;
+    const sig_basestring = "v0:" + timeStamp + ":" + body.trim();
 
     const hmac =
       "v0=" +
