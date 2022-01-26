@@ -24,6 +24,10 @@ export const verify_key = (req: Request, res: Response, next: NextFunction) => {
         .update(sig_basestring as string)
         .digest("hex");
 
+    console.log("correct at key");
+    console.log("mine", hmac);
+    console.log("slack", slack_sig);
+
     if (
       !crypto.timingSafeEqual(
         Buffer.from(hmac),
